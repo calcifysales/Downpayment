@@ -120,16 +120,16 @@
           </div>
         </div>
 
-        <!-- Pre-filled Standard Charges: Bajaj Charges (₹699) & Bank Charges (₹270) -->
+        <!-- Pre-filled Standard Charges: Bajaj Fees (₹699) & Bank Charges (₹270) -->
         <div class="two-col-grid">
           <div class="form-group">
-            <label for="bajajCharges">Bajaj Charges</label>
+            <label for="bajajCharges">Bajaj Fees</label>
             <div class="input-wrap">
               <span class="affix">₹</span>
               <input 
                 type="text" 
                 inputmode="decimal" 
-                id="bajajCharges" 
+                id="Bajajfees" 
                 value="699" 
                 class="field-input" 
                 autocomplete="off"
@@ -192,7 +192,7 @@
               />
               <span class="affix-right">%</span>
             </div>
-            <span class="field-hint">0.80%/0.30% of Product Price</span>
+            <span class="field-hint">0.80% / 0.30%</span>
           </div>
         </div>
 
@@ -257,7 +257,7 @@
               <line x1="3" y1="12" x2="3.01" y2="12"></line>
               <line x1="3" y1="18" x2="3.01" y2="18"></line>
             </svg>
-            <span id="ledgerBtnLabel">View more Details</span>
+            <span id="ledgerBtnLabel">View More Details</span>
           </span>
           <svg class="chevron-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
@@ -378,9 +378,9 @@
       <tr><td colspan="2"><hr /></td></tr>
       <tr><td>• Loan Process Fee:</td><td class="text-right" id="pBajaj">₹699</td></tr>
       <tr><td>• Bank Charges:</td><td class="text-right" id="pBank">₹270</td></tr>
-      <tr><td>• Dealer Charges (<span id="pDealerPct">0%</span>):</td><td class="text-right" id="pDealerAmt">+₹0</td></tr>
-      <tr><td>• DBD Coupon (<span id="pDbdPct">0.80%</span>):</td><td class="text-right" id="pDbdAmt">-₹0</td></tr>
-      <tr class="p-highlight"><td>DOWN PAYMENT (CHARGES):</td><td class="text-right" id="pDp">₹0</td></tr>
+      <tr><td>• Dealer Charges:</td><td class="text-right" id="pDealerAmt">+₹0</td></tr>
+      <tr><td>• DBD Coupon:</td><td class="text-right" id="pDbdAmt">-₹0</td></tr>
+      <tr class="p-highlight"><td>DOWN PAYMENT (Processing Fee):</td><td class="text-right" id="pDp">₹0</td></tr>
       <tr id="pMarginRow" style="display:none;"><td>• Margin Money:</td><td class="text-right" id="pMargin">₹0</td></tr>
       <tr class="p-grand"><td>TOTAL UPFRONT TO COLLECT:</td><td class="text-right" id="pTotalUpfront">₹0</td></tr>
     </table>
