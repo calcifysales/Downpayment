@@ -371,7 +371,7 @@
     // Reset ledger dropdown state
     el.ledgerDrawer.classList.add('hidden');
     el.toggleLedgerBtn.classList.remove('open');
-    el.ledgerBtnLabel.textContent = 'View Itemized Fee & Deduction Ledger';
+    el.ledgerBtnLabel.textContent = 'View More Details';
 
     calculate();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -399,10 +399,10 @@
       `• Dealer Charges (${state.dealerPercent}%): +₹${formatNumber(state.dealerChargesAmt)}`,
       `• DBD Coupon (${state.dbdPercent}%): -₹${formatNumber(state.dbdCouponAmt)}`,
       `━━━━━━━━━━━━━━━━━━━━`,
-      `⚡ *DOWN PAYMENT (Charges): ₹${formatNumber(state.downPayment)}*`,
+      `⚡ *Down Payment (Net Fee): ₹${formatNumber(state.downPayment)}*`,
       state.totalUpfrontToCollect !== state.downPayment ? `👉 *TOTAL UPFRONT PAYABLE AT POS: ₹${formatNumber(state.totalUpfrontToCollect)}*` : null,
       `━━━━━━━━━━━━━━━━━━━━`,
-      `*Note:* This site only gives estimation calculations; this is not the final quotation as it changes as per schemes run by store and the downpayment value may be various in tens - hundreds.`
+      `*Note:* This site only gives estimation calculations & not the final quotation as it changes as per schemes and the downpayment value may be vary between 10 - 999.`
     ].filter(Boolean).join('\n');
 
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
@@ -421,9 +421,9 @@
       `Loan Amount: ₹${formatNumber(state.netLoanAmount)}`,
       state.replacementAmt > 0 ? `Replacement / Exchange: -₹${formatNumber(state.replacementAmt)}` : null,
       state.advancePaymentAmt > 0 ? `Pre-Booking Amount: ₹${formatNumber(state.advancePaymentAmt)}` : null,
-      `Down Payment (Charges): ₹${formatNumber(state.downPayment)}`,
+      `Down Payment (Net Fee): ₹${formatNumber(state.downPayment)}`,
       state.totalUpfrontToCollect !== state.downPayment ? `Total Upfront at POS: ₹${formatNumber(state.totalUpfrontToCollect)}` : null,
-      `Note: This site only gives estimation calculations; this is not the final quotation as it changes as per schemes run by store and the downpayment value may be various in tens - hundreds.`
+      `Note: This site only gives estimation calculations & not the final quotation as it changes as per schemes and the downpayment value may be vary between 10 - 999.`
     ].filter(Boolean).join('\n');
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -475,11 +475,11 @@
       if (isHidden) {
         el.ledgerDrawer.classList.remove('hidden');
         el.toggleLedgerBtn.classList.add('open');
-        el.ledgerBtnLabel.textContent = 'Hide Itemized Fee & Deduction Ledger';
+        el.ledgerBtnLabel.textContent = 'Hide Details';
       } else {
         el.ledgerDrawer.classList.add('hidden');
         el.toggleLedgerBtn.classList.remove('open');
-        el.ledgerBtnLabel.textContent = 'View Itemized Fee & Deduction Ledger';
+        el.ledgerBtnLabel.textContent = 'View More Details';
       }
     });
 

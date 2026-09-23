@@ -212,7 +212,7 @@
 
       <!-- Hero Down Payment Box -->
       <div class="downpayment-highlight-box">
-        <span class="dp-label">DOWN PAYMENT (NET CHARGES)</span>
+        <span class="dp-label">DOWN PAYMENT (NET FEE)</span>
         <div class="dp-amount">
           <span class="rupee">₹</span>
           <span id="displayDownPayment">0</span>
@@ -277,12 +277,12 @@
             </div>
 
             <div class="breakdown-row">
-              <span class="item-name">• Dealer Charges (<span id="bdDealerPercent">0%</span> of Price)</span>
+              <span class="item-name">• Dealer Charges (<span id="bdDealerPercent">0%</span>)</span>
               <span class="item-value" id="bdDealerAmt">+ ₹0</span>
             </div>
 
             <div class="breakdown-row discount">
-              <span class="item-name">• DBD Coupon (<span id="bdDbdPercent">0.80%</span> of Price)</span>
+              <span class="item-name">• DBD Coupon (<span id="bdDbdPercent">0.80%</span>)</span>
               <span class="item-value" id="bdDbd">- ₹0</span>
             </div>
 
@@ -302,7 +302,7 @@
             <div class="breakdown-divider"></div>
 
             <div class="breakdown-row total-row">
-              <strong>Down Payment (Net Fee Charges)</strong>
+              <strong>Down Payment (Net Fee)</strong>
               <strong id="bdTotalDp">₹0</strong>
             </div>
 
@@ -342,7 +342,7 @@
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
             <rect x="6" y="14" width="12" height="8"></rect>
           </svg>
-          <span>Print Slip/PDF</span>
+          <span>Print Slip</span>
         </button>
       </div>
 
@@ -376,11 +376,11 @@
       <tr id="pAdvRow" style="display:none;"><td>• Pre-Booking Amount:</td><td class="text-right" id="pAdvVal">-₹0</td></tr>
       <tr class="p-bold"><td>Loan Amount:</td><td class="text-right" id="pNetLoan">₹0</td></tr>
       <tr><td colspan="2"><hr /></td></tr>
-      <tr><td>• Bajaj Processing Fees:</td><td class="text-right" id="pBajaj">₹699</td></tr>
+      <tr><td>• Bajaj Charges:</td><td class="text-right" id="pBajaj">₹699</td></tr>
       <tr><td>• Bank Charges:</td><td class="text-right" id="pBank">₹270</td></tr>
-      <tr><td>• Dealer Charges:</td><td class="text-right" id="pDealerAmt">+₹0</td></tr>
-      <tr><td>• DBD coupon:</td><td class="text-right" id="pDbdAmt">-₹0</td></tr>
-      <tr class="p-highlight"><td>DOWN PAYMENT (CHARGES):</td><td class="text-right" id="pDp">₹0</td></tr>
+      <tr><td>• Dealer Charges (<span id="pDealerPct">0%</span>):</td><td class="text-right" id="pDealerAmt">+₹0</td></tr>
+      <tr><td>• DBD Coupon (<span id="pDbdPct">0.80%</span>):</td><td class="text-right" id="pDbdAmt">-₹0</td></tr>
+      <tr class="p-highlight"><td>Down Payment (Net Fee):</td><td class="text-right" id="pDp">₹0</td></tr>
       <tr id="pMarginRow" style="display:none;"><td>• Margin Money:</td><td class="text-right" id="pMargin">₹0</td></tr>
       <tr class="p-grand"><td>TOTAL UPFRONT TO COLLECT:</td><td class="text-right" id="pTotalUpfront">₹0</td></tr>
     </table>
