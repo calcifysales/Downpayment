@@ -103,6 +103,7 @@
   }
 
   let state = {};
+  let isCalculated = false;
 
   // =========================================================================
   // DEDUCTIONS GRID TOGGLE HELPER
@@ -217,7 +218,9 @@
       totalUpfrontToCollect
     };
 
-    renderOutputs(state);
+    if (isCalculated) {
+      renderOutputs(state);
+    }
   }
 
   // =========================================================================
@@ -324,7 +327,33 @@
     });
   }
 
+  function handleCalculateClick() {
+    const price = parseCleanNumber(el.productPrice.value);
+    if (!price || price <= 0) {
+      el.productPrice.classList.add('input-error');
+      el.productPrice.focus();
+      setTimeout(() => {
+        el.productPrice.classList.remove('input-error');
+      }, 1200);
+      return;
+    }
+
+    isCalculated = true;
+    calculate();
+    renderOutputs(state);
+
+    // Reveal Payment Summary
+    el.resultsSection.classList.remove('hidden');
+    el.resultsSection.style.display = 'block';
+
+    // Smoothly scroll down to Payment Summary
+    setTimeout(() => {
+      el.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  }
+
   function resetForm() {
+    isCalculated = false;
     el.productPrice.value = '';
     el.checkReplacement.checked = false;
     el.checkAdvance.checked = false;
@@ -335,18 +364,23 @@
     el.dealerChargesPercent.value = '';
     el.dbdCouponPercent.value = '0.80';
 
+    // Hide Payment Summary
+    el.resultsSection.classList.add('hidden');
+    el.resultsSection.style.display = 'none';
+
     // Reset ledger dropdown state
     el.ledgerDrawer.classList.add('hidden');
     el.toggleLedgerBtn.classList.remove('open');
     el.ledgerBtnLabel.textContent = 'View Itemized Fee & Deduction Ledger';
 
     calculate();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // WhatsApp Share
   function shareQuoteWhatsApp() {
-    if (!state.productPrice && !state.netLoanAmount) {
-      alert('Please enter Product Price to generate quotation.');
+    if (!state.productPrice) {
+      alert('Please enter Product Price and calculate quotation.');
       return;
     }
 
@@ -376,8 +410,8 @@
 
   // Copy Quote
   function copyQuoteResult() {
-    if (!state.productPrice && !state.netLoanAmount) {
-      alert('Please enter Product Price to copy quotation.');
+    if (!state.productPrice) {
+      alert('Please enter Product Price and calculate quotation.');
       return;
     }
 
@@ -450,11 +484,7 @@
     });
 
     // 4. Action Buttons
-    el.calculateBtn.addEventListener('click', () => {
-      calculate();
-      el.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
+    el.calculateBtn.addEventListener('click', handleCalculateClick);
     el.resetBtn.addEventListener('click', resetForm);
     el.whatsappShareBtn.addEventListener('click', shareQuoteWhatsApp);
     el.copyBtn.addEventListener('click', copyQuoteResult);
@@ -463,7 +493,9 @@
       window.print();
     });
 
-    // Initial calculation on page load
+    // Ensure Payment Summary is hidden on initial load
+    el.resultsSection.classList.add('hidden');
+    el.resultsSection.style.display = 'none';
     calculate();
   }
 

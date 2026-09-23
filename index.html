@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Estimated Quotation - EMI Down Payment</title>
-  <meta name="description" content="Estimated EMI Down Payment & Processing Fee Calculator." />
+  <title>Down Payment Calculator</title>
+  <meta name="description" content="EMI Down Payment & Processing Fee Calculator." />
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -204,11 +204,10 @@
       </form>
     </section>
 
-    <!-- 2. Payment Summary Card (Vertical Format below Inputs) -->
-    <section class="calc-card output-card" id="resultsSection">
+    <!-- 2. Payment Summary Card (Vertical Format below Inputs - Visible on Calculate) -->
+    <section class="calc-card output-card hidden" id="resultsSection" style="display: none;">
       <div class="card-title-row">
         <h2 class="form-heading">Payment Summary</h2>
-        <span class="pos-badge">Estimated Quote</span>
       </div>
 
       <!-- Hero Down Payment Box -->
@@ -225,7 +224,7 @@
         <div class="upfront-header">
           <div class="upfront-titles">
             <span class="upfront-label">TOTAL UPFRONT TO COLLECT AT POS</span>
-            <span class="upfront-sub">Down Payment + Pre-Booking + Margin Money</span>
+            <span class="upfront-sub">Down Payment + Pre-Booking Amount</span>
           </div>
           <div class="upfront-amount">
             <span class="upfront-symbol">₹</span>
@@ -390,7 +389,6 @@
   </div>
 
   <footer class="compact-footer">
-    <p class="footer-note">This site only gives estimation calculations; this is not the final quotation as it changes as per schemes run by store and the downpayment value may be various in tens - hundreds.</p>
     <p class="creator-credits">Created By <strong>Tharun Kumar</strong> • <svg class="mail-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Mail" style="vertical-align: -2px; margin-right: 3px; color: var(--bajaj-blue);"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:Calcify.sales@gmail.com">Calcify.sales@gmail.com</a></p>
   </footer>
 
