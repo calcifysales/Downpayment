@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Calcify_Bajaj Finance - EMI Down Payment Calculator</title>
-  <meta name="description" content="Calculate EMI Down Payment for Bajaj Finance - Calcify." />
+  <title>Estimated Quotation - EMI Down Payment</title>
+  <meta name="description" content="Estimated EMI Down Payment & Processing Fee Calculator." />
   <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,34 +13,36 @@
 </head>
 <body>
 
-  <!-- Top Center Header: Calcify Logo & Tagline -->
+  <!-- Top Center Header: Logo -->
   <header class="calcify-top-header">
     <div class="header-inner">
       <img src="logo.png" alt="Calcify" class="brand-logo-img" />
-      <span class="header-tagline">Calcify_Bajaj Finance</span>
     </div>
   </header>
 
-  <!-- Mobile-First Compact Page Container -->
+  <!-- Vertical Mobile-Friendly Page Container -->
   <main class="page-container">
     
-    <!-- 1. Input Card -->
-    <div class="calc-card input-card">
+    <!-- 1. Transaction Inputs Card -->
+    <section class="calc-card input-card">
       <div class="card-title-row">
         <div>
-          <h1 class="form-heading">EMI Down Payment</h1>
-          <p class="form-subheading">Fill product & loan details</p>
+          <h1 class="form-heading">Transaction Inputs</h1>
+          <p class="form-subheading">Enter product & loan parameters</p>
         </div>
-        <button type="button" id="resetBtn" class="card-reset-btn" title="Reset fields">
+        <button type="button" id="resetBtn" class="card-reset-btn" title="Reset all fields to defaults">
           Reset
         </button>
       </div>
 
       <form id="calcForm" onsubmit="return false;">
-        
+
         <!-- Product Price -->
         <div class="form-group">
-          <label for="productPrice">Product Price</label>
+          <div class="label-flex">
+            <label for="productPrice">Product Price (MRP/Invoice)</label>
+            <span class="field-required">Required</span>
+          </div>
           <div class="input-wrap">
             <span class="affix">₹</span>
             <input 
@@ -48,29 +50,77 @@
               inputmode="decimal" 
               id="productPrice" 
               placeholder="Enter product price" 
-              class="field-input" 
+              class="field-input primary-input" 
               autocomplete="off"
             />
           </div>
         </div>
 
-        <!-- Loan Amount -->
-        <div class="form-group">
-          <label for="loanAmount">Loan Amount</label>
-          <div class="input-wrap">
-            <span class="affix">₹</span>
-            <input 
-              type="text" 
-              inputmode="decimal" 
-              id="loanAmount" 
-              placeholder="Enter loan amount" 
-              class="field-input" 
-              autocomplete="off"
-            />
+
+        <!-- Separated Deductions: Replacement & Pre-Booking Amount Checkboxes -->
+        <div class="deductions-toggle-container">
+          <div class="checkbox-row">
+            <label class="custom-checkbox-label">
+              <input type="checkbox" id="checkReplacement" />
+              <span class="checkbox-box"></span>
+              <span class="checkbox-text">Replacement / Exchange</span>
+            </label>
+
+            <label class="custom-checkbox-label">
+              <input type="checkbox" id="checkAdvance" />
+              <span class="checkbox-box"></span>
+              <span class="checkbox-text">Pre-Booking Amount</span>
+            </label>
+          </div>
+
+          <!-- Side-by-Side Inputs Container when checked to save space -->
+          <div id="deductionsInputsGrid" class="deductions-inputs-grid" style="display: none;">
+            
+            <!-- Replacement Input Field -->
+            <div id="replacementFieldWrap" class="deduction-field-col" style="display: none;">
+              <div class="form-group mb-0">
+                <label for="replacementAmt">Replacement / Exchange</label>
+                <div class="input-wrap">
+                  <span class="affix">₹</span>
+                  <input 
+                    type="text" 
+                    inputmode="decimal" 
+                    id="replacementAmt" 
+                    placeholder="Exchange value" 
+                    class="field-input" 
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Pre-Booking Amount Input Field -->
+            <div id="advanceFieldWrap" class="deduction-field-col" style="display: none;">
+              <div class="form-group mb-0">
+                <label for="advancePaymentAmt">Pre-Booking Amount</label>
+                <div class="input-wrap">
+                  <span class="affix">₹</span>
+                  <input 
+                    type="text" 
+                    inputmode="decimal" 
+                    id="advancePaymentAmt" 
+                    placeholder="Pre-booking cash" 
+                    class="field-input" 
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Live Bar: Loan Amount after deductions -->
+          <div id="netLoanNoticeBar" class="net-loan-bar" style="display: none;">
+            <span>Loan Amount: <strong id="netLoanPreviewVal">₹0</strong></span>
           </div>
         </div>
 
-        <!-- Standard Charges (Pre-entered ₹699 and ₹270) -->
+        <!-- Pre-filled Standard Charges: Bajaj Charges (₹699) & Bank Charges (₹270) -->
         <div class="two-col-grid">
           <div class="form-group">
             <label for="bajajCharges">Bajaj Charges</label>
@@ -85,6 +135,7 @@
                 autocomplete="off"
               />
             </div>
+            <span class="field-hint">Standard file fee</span>
           </div>
 
           <div class="form-group">
@@ -100,13 +151,17 @@
                 autocomplete="off"
               />
             </div>
+            <span class="field-hint">eNACH mandate</span>
           </div>
         </div>
 
-        <!-- Dealer Charges & DBD Coupon -->
+        <!-- Percentage Charges: Dealer Charges (%) & DBD Coupon (%) -->
         <div class="two-col-grid">
           <div class="form-group">
-            <label for="dealerChargesPercent">Dealer Charges (%)</label>
+            <div class="label-flex">
+              <label for="dealerChargesPercent">Dealer Charges (%)</label>
+              <span id="dealerAmountLiveBadge" class="label-aside tag-charge">₹0</span>
+            </div>
             <div class="input-wrap">
               <input 
                 type="text" 
@@ -118,21 +173,26 @@
               />
               <span class="affix-right">%</span>
             </div>
+            <span class="field-hint">On Product Price</span>
           </div>
 
           <div class="form-group">
-            <label for="dbdCoupon">DBD Coupon (₹)</label>
+            <div class="label-flex">
+              <label for="dbdCouponPercent">DBD Coupon (%)</label>
+              <span id="dbdAmountLiveBadge" class="label-aside tag-discount">-₹0</span>
+            </div>
             <div class="input-wrap">
-              <span class="affix">₹</span>
               <input 
                 type="text" 
                 inputmode="decimal" 
-                id="dbdCoupon" 
-                placeholder="0" 
-                class="field-input" 
+                id="dbdCouponPercent" 
+                value="0.80" 
+                class="field-input right-affix-input" 
                 autocomplete="off"
               />
+              <span class="affix-right">%</span>
             </div>
+            <span class="field-hint">0.80% of Product Price</span>
           </div>
         </div>
 
@@ -142,25 +202,39 @@
         </button>
 
       </form>
-    </div>
+    </section>
 
-    <!-- 2. Output Card (Vertical below, initially hidden) -->
-    <div id="outputSection" class="calc-card output-card hidden">
-      
-      <div class="output-header">
-        <h2>Calculation Result</h2>
+    <!-- 2. Payment Summary Card (Vertical Format below Inputs) -->
+    <section class="calc-card output-card" id="resultsSection">
+      <div class="card-title-row">
+        <h2 class="form-heading">Payment Summary</h2>
+        <span class="pos-badge">Estimated Quote</span>
       </div>
 
-      <!-- Final Down Payment Highlight -->
+      <!-- Hero Down Payment Box -->
       <div class="downpayment-highlight-box">
-        <span class="dp-label">DOWN PAYMENT</span>
+        <span class="dp-label">DOWN PAYMENT (NET CHARGES)</span>
         <div class="dp-amount">
           <span class="rupee">₹</span>
           <span id="displayDownPayment">0</span>
         </div>
       </div>
 
-      <!-- Product Price and Loan Amount (Clean values) -->
+      <!-- Total Upfront at POS Box -->
+      <div class="total-upfront-card">
+        <div class="upfront-header">
+          <div class="upfront-titles">
+            <span class="upfront-label">TOTAL UPFRONT TO COLLECT AT POS</span>
+            <span class="upfront-sub">Down Payment + Pre-Booking + Margin Money</span>
+          </div>
+          <div class="upfront-amount">
+            <span class="upfront-symbol">₹</span>
+            <span id="displayTotalUpfront">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Financial Metric Tiles -->
       <div class="summary-key-values">
         <div class="key-item">
           <span class="k-label">Product Price</span>
@@ -168,78 +242,156 @@
         </div>
         <div class="key-item">
           <span class="k-label">Loan Amount</span>
-          <strong class="k-val" id="displayLoanAmount">₹0</strong>
+          <strong class="k-val text-blue" id="displayLoanAmount">₹0</strong>
         </div>
       </div>
 
-      <!-- Collapsible Detailed Breakdown -->
+      <!-- Dropdown Collapsible: Itemized Fee & Deduction Ledger (HIDDEN BY DEFAULT) -->
       <div class="breakdown-collapsible">
-        <button type="button" id="toggleBreakdownBtn" class="breakdown-toggle-btn">
-          <span id="breakdownBtnText">View Itemized Charge Breakdown</span>
-          <svg class="chevron-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" id="toggleLedgerBtn" class="breakdown-toggle-btn">
+          <span class="ledger-toggle-text">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span id="ledgerBtnLabel">View Itemized Fee & Deduction Ledger</span>
+          </span>
+          <svg class="chevron-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </button>
 
-        <div id="breakdownDrawer" class="breakdown-drawer hidden">
+        <div id="ledgerDrawer" class="breakdown-drawer hidden">
           <div class="breakdown-list">
             <div class="breakdown-row">
-              <span class="item-name">Bajaj Charges</span>
-              <span class="item-value" id="bdBajaj">₹699</span>
+              <span class="item-name">• Bajaj Charges (Processing Fee)</span>
+              <span class="item-value" id="bdBajaj">+ ₹699</span>
             </div>
+
             <div class="breakdown-row">
-              <span class="item-name">Bank Charges</span>
-              <span class="item-value" id="bdBank">₹270</span>
+              <span class="item-name">• Bank Charges (eNACH Registration)</span>
+              <span class="item-value" id="bdBank">+ ₹270</span>
             </div>
+
             <div class="breakdown-row">
-              <span class="item-name">Dealer Charges (<span id="bdDealerPercent">0%</span>)</span>
-              <span class="item-value" id="bdDealerAmt">₹0</span>
+              <span class="item-name">• Dealer Charges (<span id="bdDealerPercent">0%</span> of Price)</span>
+              <span class="item-value" id="bdDealerAmt">+ ₹0</span>
             </div>
+
             <div class="breakdown-row discount">
-              <span class="item-name">DBD Coupon</span>
+              <span class="item-name">• DBD Coupon (<span id="bdDbdPercent">0.80%</span> of Price)</span>
               <span class="item-value" id="bdDbd">- ₹0</span>
             </div>
+
+            <!-- Deductions Section if enabled -->
+            <div id="bdDeductionsSection" style="display: none;">
+              <div class="breakdown-divider"></div>
+              <div class="breakdown-row deduction-item" id="bdReplacementRow" style="display: none;">
+                <span class="item-name">• Replacement / Exchange Value</span>
+                <span class="item-value" id="bdReplacementVal">- ₹0</span>
+              </div>
+              <div class="breakdown-row deduction-item" id="bdAdvanceRow" style="display: none;">
+                <span class="item-name">• Pre-Booking Amount Paid</span>
+                <span class="item-value" id="bdAdvanceVal">+ ₹0 (Cash at POS)</span>
+              </div>
+            </div>
+
             <div class="breakdown-divider"></div>
+
             <div class="breakdown-row total-row">
-              <strong>Down Payment (Charges)</strong>
+              <strong>Down Payment (Net Fee Charges)</strong>
               <strong id="bdTotalDp">₹0</strong>
             </div>
-            <div id="bdMarginRow" class="breakdown-row" style="display: none;">
-              <span class="item-name">Margin Money (Price - Loan)</span>
-              <span class="item-value" id="bdMarginMoney">₹0</span>
+
+            <div id="bdMarginRow" class="breakdown-row margin-row" style="display: none;">
+              <span class="item-name">• Margin Money (Price - Base Loan)</span>
+              <span class="item-value" id="bdMarginMoney">+ ₹0</span>
             </div>
-            <div id="bdTotalUpfrontRow" class="breakdown-row grand-row" style="display: none;">
-              <strong>Total Upfront to Pay</strong>
-              <strong id="bdTotalUpfront">₹0</strong>
+
+            <div class="breakdown-row grand-row">
+              <strong>Total Upfront Payable by Customer</strong>
+              <strong id="bdGrandTotalUpfront">₹0</strong>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Action Buttons: WhatsApp, Copy, Print -->
       <div class="output-actions">
-        <button type="button" id="whatsappShareBtn" class="action-btn btn-whatsapp">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <button type="button" id="whatsappShareBtn" class="action-btn btn-whatsapp" title="Share estimated quotation to WhatsApp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12.031 2C6.495 2 2 6.494 2 12.03c0 1.942.553 3.754 1.512 5.289L2 22l4.825-1.485A10.007 10.007 0 0 0 12.031 22C17.568 22 22 17.506 22 12.03 22 6.494 17.568 2 12.031 2zm5.787 14.288c-.244.689-1.22 1.3-1.706 1.378-.445.07-1.02.1-1.636-.1-.39-.126-.893-.292-1.554-.576-2.73-1.182-4.52-3.926-4.658-4.11-.137-.184-1.109-1.478-1.109-2.82 0-1.342.702-2.002.952-2.274.25-.272.545-.34.726-.34.181 0 .363.003.522.01.17.009.398-.065.623.473.238.568.806 1.968.875 2.109.068.14.114.305.023.488-.09.183-.136.297-.272.457-.137.16-.287.357-.41.48-.137.136-.28.284-.12.56.16.275.711 1.173 1.528 1.9 1.053.937 1.942 1.228 2.218 1.365.275.137.436.115.597-.07.16-.183.69-.803.874-1.077.183-.275.367-.229.613-.138.25.092 1.579.745 1.851.881.272.137.453.206.52.32.069.115.069.666-.175 1.355z"/>
           </svg>
           <span>Share WhatsApp</span>
         </button>
 
-        <button type="button" id="copyBtn" class="action-btn btn-copy">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button type="button" id="copyBtn" class="action-btn btn-copy" title="Copy estimated quote to clipboard">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
           </svg>
-          <span id="copyBtnLabel">Copy</span>
+          <span id="copyBtnLabel">Copy Quote</span>
+        </button>
+
+        <button type="button" id="printBtn" class="action-btn btn-print" title="Print quotation slip">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+          <span>Print Slip</span>
         </button>
       </div>
 
-    </div>
+      <!-- Estimation Disclaimer Notice -->
+      <div class="disclaimer-alert">
+        <svg class="disclaimer-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span class="disclaimer-text">
+          <strong>Note:</strong> This site only gives estimation calculations; this is not the final quotation as it changes as per schemes run by store and the downpayment value may be various in tens - hundreds.
+        </span>
+      </div>
+
+    </section>
 
   </main>
 
+  <!-- Printable Slip (Visible only when printing) -->
+  <div id="printSlip" class="printable-slip">
+    <div class="p-header">
+      <h2>ESTIMATED QUOTATION</h2>
+      <p>EMI Down Payment Calculation Slip</p>
+      <span id="printDate"></span>
+    </div>
+    <hr />
+    <table class="p-table">
+      <tr><td>Product Price:</td><td class="text-right" id="pPrice">₹0</td></tr>
+      <tr id="pRepRow" style="display:none;"><td>• Replacement / Exchange:</td><td class="text-right" id="pRepVal">-₹0</td></tr>
+      <tr id="pAdvRow" style="display:none;"><td>• Pre-Booking Amount:</td><td class="text-right" id="pAdvVal">-₹0</td></tr>
+      <tr class="p-bold"><td>Loan Amount:</td><td class="text-right" id="pNetLoan">₹0</td></tr>
+      <tr><td colspan="2"><hr /></td></tr>
+      <tr><td>• Bajaj Charges:</td><td class="text-right" id="pBajaj">₹699</td></tr>
+      <tr><td>• Bank Charges:</td><td class="text-right" id="pBank">₹270</td></tr>
+      <tr><td>• Dealer Charges (<span id="pDealerPct">0%</span>):</td><td class="text-right" id="pDealerAmt">+₹0</td></tr>
+      <tr><td>• DBD Coupon (<span id="pDbdPct">0.80%</span>):</td><td class="text-right" id="pDbdAmt">-₹0</td></tr>
+      <tr class="p-highlight"><td>DOWN PAYMENT (CHARGES):</td><td class="text-right" id="pDp">₹0</td></tr>
+      <tr id="pMarginRow" style="display:none;"><td>• Margin Money:</td><td class="text-right" id="pMargin">₹0</td></tr>
+      <tr class="p-grand"><td>TOTAL UPFRONT TO COLLECT:</td><td class="text-right" id="pTotalUpfront">₹0</td></tr>
+    </table>
+    <hr />
+    <p class="p-footer">* Note: This site only gives estimation calculations; this is not the final quotation as it changes as per schemes run by store and the downpayment value may be various in tens - hundreds.</p>
+  </div>
+
   <footer class="compact-footer">
-    <p>Calcify_Bajaj Finance • EMI Down Payment</p>
+    <p class="footer-note">This site only gives estimation calculations; this is not the final quotation as it changes as per schemes run by store and the downpayment value may be various in tens - hundreds.</p>
+    <p class="creator-credits">Created By <strong>Tharun Kumar</strong> • <svg class="mail-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-label="Mail" style="vertical-align: -2px; margin-right: 3px; color: var(--bajaj-blue);"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg><a href="mailto:Calcify.sales@gmail.com">Calcify.sales@gmail.com</a></p>
   </footer>
 
   <script src="app.js"></script>
